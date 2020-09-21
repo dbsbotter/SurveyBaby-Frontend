@@ -34,14 +34,12 @@ interface ErrorData {
 }
 
 interface Level {
-  status: Status;
+  status?: Status;
   error?: ErrorData;
 }
 
 const Pick: React.FC = () => {
-  const [level, setLevel] = useState<Level>({
-    status: Status.Normal,
-  });
+  const [level, setLevel] = useState<Level>({});
 
   const [survey, setSurvey] = useState<SurveyData>({} as SurveyData);
 
@@ -56,11 +54,9 @@ const Pick: React.FC = () => {
 
         const { pick } = response.data;
 
-        if (pick) {
-          setLevel({
-            status: Status.Success,
-          });
-        }
+        setLevel({
+          status: pick ? Status.Success : Status.Normal,
+        });
 
         setSurvey(response.data);
       } catch (err) {
