@@ -20,7 +20,7 @@ const appearFromLeft = keyframes`
   }
 `;
 
-export const Content = styled.div`
+export const Content = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
