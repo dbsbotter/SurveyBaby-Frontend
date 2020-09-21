@@ -29,6 +29,7 @@ export const Content = styled.div`
 
   width: 100%;
   text-align: center;
+  height: 100vh;
 
   animation: ${appearFromLeft} 1s;
 
