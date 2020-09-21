@@ -75,13 +75,15 @@ const Pick: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: string) => {
       try {
-        await api.patch(`/surveys/${id}`, {
+        const response = await api.patch(`/surveys/${id}`, {
           pick: data,
         });
 
         setLevel({
           status: Status.Success,
         });
+
+        setSurvey(response.data);
       } catch (err) {
         addToast({
           type: 'error',
