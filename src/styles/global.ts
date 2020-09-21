@@ -6,6 +6,8 @@ export default createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     outline: 0;
+
+    overflow: auto;
   }
 
   body {
@@ -13,7 +15,11 @@ export default createGlobalStyle`
     color: #312e38;
     -webkit-font-smoothing: antialiased;
 
-    height: 100vh;
+    @media (max-width: 600px) {
+      main {
+        padding: 0 30px;
+      }
+    }
   }
 
   body, input, button {

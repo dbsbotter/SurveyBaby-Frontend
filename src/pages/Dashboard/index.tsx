@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
-
 import { Link } from 'react-router-dom';
+import copy from 'clipboard-copy';
+
 import { Container, Content, ContentTop } from './styles';
 
 import Header from '../../components/Header';
+import Button from '../../components/Button';
 
 import api from '../../services/api';
 import { useToast } from '../../hooks/toast';
-import Button from '../../components/Button';
 
 const columns = [
   {
@@ -30,6 +31,13 @@ const columns = [
     title: 'Url',
     dataIndex: 'url_bitly',
     key: 'url_bitly',
+    render: (url_bitly: string) => {
+      return (
+        <div aria-hidden="true" onClick={() => copy(url_bitly)}>
+          {url_bitly}
+        </div>
+      );
+    },
   },
 ];
 

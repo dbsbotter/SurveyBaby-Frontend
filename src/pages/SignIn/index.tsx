@@ -69,7 +69,13 @@ const SignIn: React.FC = () => {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>Painel Administrativo</h1>
 
-          <Input sex="M" name="email" icon={FiMail} placeholder="E-mail" />
+          <Input
+            type="email"
+            sex="M"
+            name="email"
+            icon={FiMail}
+            placeholder="E-mail"
+          />
           <Input
             sex="F"
             name="password"

@@ -7,8 +7,8 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const Content = styled.div`
-  width: 800px;
+export const Content = styled.main`
+  width: 100%;
   max-width: 800px;
 
   display: flex;
@@ -29,5 +29,14 @@ export const ButtonsSubmit = styled.div`
 
   button:nth-child(2) {
     margin-left: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+
+    button:nth-child(2) {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
   }
 `;
