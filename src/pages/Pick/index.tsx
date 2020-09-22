@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import { useToast } from '../../hooks/toast';
+import { useLoading } from '../../hooks/loading';
 import api from '../../services/api';
 
 import {
@@ -46,9 +47,12 @@ const Pick: React.FC = () => {
   const { id } = useParams<URLParams>();
 
   const { addToast } = useToast();
+  const { handlerLoading } = useLoading();
 
   useEffect(() => {
     (async function func() {
+      handlerLoading(true);
+
       try {
         const response = await api.get<SurveyData>(`/surveys/${id}`);
 
@@ -65,11 +69,15 @@ const Pick: React.FC = () => {
           error: err.response.data,
         });
       }
+
+      handlerLoading(false);
     })();
-  }, [id, setLevel, setSurvey]);
+  }, [id, handlerLoading, setLevel, setSurvey]);
 
   const handleSubmit = useCallback(
     async (data: string) => {
+      handlerLoading(true);
+
       try {
         const response = await api.patch(`/surveys/${id}`, {
           pick: data,
@@ -87,8 +95,10 @@ const Pick: React.FC = () => {
           description: 'Ocorreu um erro ao salvar sua escolha',
         });
       }
+
+      handlerLoading(false);
     },
-    [id, addToast],
+    [id, handlerLoading, addToast],
   );
 
   const handlePickBoy = useCallback(async () => {

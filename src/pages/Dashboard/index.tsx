@@ -10,6 +10,7 @@ import Button from '../../components/Button';
 
 import api from '../../services/api';
 import { useToast } from '../../hooks/toast';
+import { useLoading } from '../../hooks/loading';
 
 const columns = [
   {
@@ -50,11 +51,14 @@ interface PicksData {
 
 const Dashboard: React.FC = () => {
   const { addToast } = useToast();
+  const { handlerLoading } = useLoading();
 
   const [picks, setPicks] = useState([]);
 
   useEffect(() => {
     (async function func() {
+      handlerLoading(true);
+
       try {
         const response = await api.get('/surveys');
 
@@ -71,8 +75,10 @@ const Dashboard: React.FC = () => {
           description: 'Ocorreu um erro ao obter os dados',
         });
       }
+
+      handlerLoading(false);
     })();
-  }, [addToast]);
+  }, [handlerLoading, addToast]);
 
   return (
     <Container>

@@ -7,6 +7,7 @@ import getValidationsErrors from '../../utils/getValidationErrors';
 
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
+import { useLoading } from '../../hooks/loading';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -23,10 +24,12 @@ const SignIn: React.FC = () => {
 
   const { signIn } = useAuth();
   const { addToast } = useToast();
+  const { handlerLoading } = useLoading();
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
       try {
+        handlerLoading(true);
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -59,8 +62,10 @@ const SignIn: React.FC = () => {
           description: 'Ocorreu um erro ao fazer login',
         });
       }
+
+      handlerLoading(false);
     },
-    [signIn, addToast],
+    [signIn, addToast, handlerLoading],
   );
 
   return (

@@ -9,6 +9,7 @@ import Header from '../../../components/Header';
 import Input from '../../../components/Input';
 import getValidationsErrors from '../../../utils/getValidationErrors';
 import { useToast } from '../../../hooks/toast';
+import { useLoading } from '../../../hooks/loading';
 
 import { Container, Content, ButtonsSubmit } from './styles';
 import Button from '../../../components/Button';
@@ -24,9 +25,12 @@ const NewPick: React.FC = () => {
   const history = useHistory();
 
   const { addToast } = useToast();
+  const { handlerLoading } = useLoading();
 
   const handleSubmit = useCallback(
     async (data: NewPickFormData) => {
+      handlerLoading(true);
+
       try {
         formRef.current?.setErrors({});
 
@@ -58,8 +62,10 @@ const NewPick: React.FC = () => {
           description: 'Ocorreu um erro cadastrar um novo pick',
         });
       }
+
+      handlerLoading(false);
     },
-    [addToast, history],
+    [handlerLoading, addToast, history],
   );
 
   return (
