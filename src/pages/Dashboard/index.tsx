@@ -114,7 +114,10 @@ const Dashboard: React.FC = () => {
         </ContentResult>
 
         <DescriptionResult>
-          {result.boy > 50 ? 'Os meninos venceram' : 'As meninas venceram'}
+          {result.boy === result.girl && 'Eita! Empate.'}
+          {result.boy > 50 && result.boy !== result.girl
+            ? 'Os meninos venceram'
+            : 'As meninas venceram'}
         </DescriptionResult>
 
         <Table size="small" dataSource={picks} columns={columns} />
