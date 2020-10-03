@@ -82,7 +82,6 @@ const Dashboard: React.FC = () => {
         });
 
         setResult(response.data.result);
-        console.log(response.data);
 
         setPicks(newData);
       } catch (e) {
@@ -96,6 +95,15 @@ const Dashboard: React.FC = () => {
       handlerLoading(false);
     })();
   }, [handlerLoading, addToast]);
+
+  let resultText;
+  if (result.boy === result.girl) {
+    resultText = 'Eita! Empate';
+  } else if (result.boy > 50) {
+    resultText = 'Os meninos venceram';
+  } else {
+    resultText = 'As meninas venceram';
+  }
 
   return (
     <Container>
@@ -113,12 +121,7 @@ const Dashboard: React.FC = () => {
           <ResultGirl width={`${result.girl}%`} />
         </ContentResult>
 
-        <DescriptionResult>
-          {result.boy === result.girl && 'Eita! Empate.'}
-          {result.boy > 50 && result.boy !== result.girl
-            ? 'Os meninos venceram'
-            : 'As meninas venceram'}
-        </DescriptionResult>
+        <DescriptionResult>{resultText}</DescriptionResult>
 
         <Table size="small" dataSource={picks} columns={columns} />
       </Content>
