@@ -3,7 +3,15 @@ import { Table } from 'antd';
 import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
 
-import { Container, Content, ContentTop } from './styles';
+import {
+  Container,
+  Content,
+  ContentTop,
+  ContentResult,
+  ResultBoy,
+  ResultGirl,
+  DescriptionResult,
+} from './styles';
 
 import Header from '../../components/Header';
 import Button from '../../components/Button';
@@ -49,11 +57,17 @@ interface PicksData {
   url_bitly: string;
 }
 
+interface ResultData {
+  boy: number;
+  girl: number;
+}
+
 const Dashboard: React.FC = () => {
   const { addToast } = useToast();
   const { handlerLoading } = useLoading();
 
   const [picks, setPicks] = useState([]);
+  const [result, setResult] = useState<ResultData>({} as ResultData);
 
   useEffect(() => {
     (async function func() {
@@ -62,10 +76,13 @@ const Dashboard: React.FC = () => {
       try {
         const response = await api.get('/surveys');
 
-        const newData = response.data.map((survey: PicksData) => {
+        const newData = response.data.surveys.map((survey: PicksData) => {
           const { id: key, ...rest } = survey;
           return { key, ...rest };
         });
+
+        setResult(response.data.result);
+        console.log(response.data);
 
         setPicks(newData);
       } catch (e) {
@@ -90,6 +107,15 @@ const Dashboard: React.FC = () => {
             <Button typeClass="success">Novo</Button>
           </Link>
         </ContentTop>
+
+        <ContentResult>
+          <ResultBoy width={`${result.boy}%`} />
+          <ResultGirl width={`${result.girl}%`} />
+        </ContentResult>
+
+        <DescriptionResult>
+          {result.boy > 50 ? 'Os meninos venceram' : 'As meninas venceram'}
+        </DescriptionResult>
 
         <Table size="small" dataSource={picks} columns={columns} />
       </Content>

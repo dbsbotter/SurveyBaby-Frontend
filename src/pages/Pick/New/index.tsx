@@ -48,6 +48,8 @@ const NewPick: React.FC = () => {
 
         history.push('/dashboard');
       } catch (err) {
+        handlerLoading(false);
+
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationsErrors(err);
 
